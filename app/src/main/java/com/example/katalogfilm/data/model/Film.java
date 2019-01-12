@@ -5,4 +5,7 @@ package com.example.katalogfilm.data.model;
  */
 
 public class Film {
+    public static void main(String[] args) {
+        
+    }
 }
