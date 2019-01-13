@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.katalogfilm.R;
-import com.example.katalogfilm.ViewOnItemClick;
+import com.example.katalogfilm.utils.ViewOnItemClick;
 import com.example.katalogfilm.data.model.MovieItems;
 import com.squareup.picasso.Picasso;
 
@@ -40,10 +40,23 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         this.callback = callback;
     }
 
+    public MovieItems getItem(int position){
+        return data.get(position);
+    }
+
     @Override
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.movie_items, viewGroup, false);
-        return new MovieHolder(view);
+        final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.movie_items, viewGroup, false);
+        final MovieHolder holder = new MovieHolder(view);
+        if(callback!=null){
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    callback.onItemClick(holder.getPosition(), view);
+                }
+            });
+        }
+        return holder;
     }
 
     @Override

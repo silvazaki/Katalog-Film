@@ -1,6 +1,7 @@
 package com.example.katalogfilm.activity;
 
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.katalogfilm.R;
+import com.example.katalogfilm.utils.ViewOnItemClick;
 import com.example.katalogfilm.adapter.MovieAdapter;
 import com.example.katalogfilm.data.loopj.MyAsyncTaskLoaderSearchMovie;
 import com.example.katalogfilm.data.model.MovieItems;
@@ -48,20 +50,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         getLoaderManager().initLoader(0, bundle, this);
 
-
-        buttonCari.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String query = editTextPencarian.getText().toString();
-
-                if (TextUtils.isEmpty(query))return;
-
-                Bundle bundle = new Bundle();
-                bundle.putString(EXTRAS_FILM,query);
-                getLoaderManager().restartLoader(0,bundle,MainActivity.this);
-            }
-        });
+        setOnClick();
     }
 
 
@@ -92,5 +81,33 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+    public void setOnClick(){
+
+
+        buttonCari.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String query = editTextPencarian.getText().toString();
+
+                if (TextUtils.isEmpty(query))return;
+
+                Bundle bundle = new Bundle();
+                bundle.putString(EXTRAS_FILM,query);
+                getLoaderManager().restartLoader(0,bundle,MainActivity.this);
+            }
+        });
+
+        adapter.setCallback(new ViewOnItemClick.MovieItemCallback() {
+            @Override
+            public void onItemClick(int position, View view) {
+                Intent intent = new Intent(MainActivity.this, DetailMovieActivity.class);
+                intent.putExtra(DetailMovieActivity.MOVIE_DETAIL, adapter.getItem(position));
+                startActivity(intent);
+            }
+        });
+    }
+
 
 }

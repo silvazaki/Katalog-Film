@@ -163,7 +163,7 @@ public class MovieItems implements Parcelable {
         dest.writeDouble(this.voteAverage);
         dest.writeString(this.title);
         dest.writeDouble(this.popularity);
-        dest.writeString(this.posterPath);
+        dest.writeString("https://image.tmdb.org/t/p/w185"+this.posterPath);
         dest.writeString(this.originalLanguage);
         dest.writeString(this.originalTitle);
         dest.writeString(this.backdropPath);
