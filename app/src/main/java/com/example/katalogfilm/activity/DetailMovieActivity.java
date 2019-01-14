@@ -1,7 +1,7 @@
 package com.example.katalogfilm.activity;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,7 +21,10 @@ public class DetailMovieActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
         items = getIntent().getParcelableExtra(MOVIE_DETAIL);
-        getSupportActionBar().setTitle(items.getTitle());
+
+        if (items != null) {
+            getSupportActionBar().setTitle(items.getTitle());
+        }
 
         imgDetail = findViewById(R.id.img_detail);
         title = findViewById(R.id.tv_title);

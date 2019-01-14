@@ -20,7 +20,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        tools:text="@string/title" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,14 +40,14 @@
                 android:id="@+id/tv_popularity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7.0"
                 android:textColor="@color/colorAccent"
-                android:textSize="26sp" />
+                android:textSize="26sp"
+                tools:text="@string/detail_viewer" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Viewers" />
+                tools:text="@string/viewer" />
         </LinearLayout>
 
         <View
@@ -65,14 +66,14 @@
                 android:id="@+id/tv_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="7.0"
                 android:textColor="@color/colorAccent"
-                android:textSize="26sp" />
+                android:textSize="26sp"
+                tools:text="@string/detail_rating" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rating" />
+                tools:text="@string/rating" />
         </LinearLayout>
 
         <View
@@ -91,14 +92,14 @@
                 android:id="@+id/tv_language"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EN"
                 android:textColor="@color/colorAccent"
-                android:textSize="26sp" />
+                android:textSize="26sp"
+                tools:text="@string/language" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="language" />
+                tools:text="@string/detail_language" />
         </LinearLayout>
 
     </LinearLayout>
@@ -112,32 +113,32 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Release"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="@string/detail_release" />
 
         <TextView
             android:id="@+id/tv_release"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:text="Release"
             android:textColor="@color/colorAccent"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            tools:text="@string/release" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:text="Overview"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            tools:text="@string/overview2" />
 
         <TextView
             android:id="@+id/tv_overview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:text="Overview" />
+            tools:text="@string/overview2" />
     </LinearLayout>
 </LinearLayout>

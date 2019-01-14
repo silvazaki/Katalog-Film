@@ -11,39 +11,63 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class MovieItems implements Parcelable {
+    public static final Parcelable.Creator<MovieItems> CREATOR = new Parcelable.Creator<MovieItems>() {
+        @Override
+        public MovieItems createFromParcel(Parcel source) {
+            return new MovieItems(source);
+        }
+
+        @Override
+        public MovieItems[] newArray(int size) {
+            return new MovieItems[size];
+        }
+    };
     @SerializedName("vote_count")
     @Expose
     private int voteCount;
     private int id;
     private boolean video;
-
     @SerializedName("vote_average")
     @Expose
     private double voteAverage;
     private String title;
     private double popularity;
-
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
-
     @SerializedName("original_language")
     @Expose
     private String originalLanguage;
-
     @SerializedName("original_title")
     @Expose
     private String originalTitle;
-
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;
     private boolean adult;
     private String overview;
-
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
+
+    public MovieItems() {
+    }
+
+    protected MovieItems(Parcel in) {
+        this.voteCount = in.readInt();
+        this.id = in.readInt();
+        this.video = in.readByte() != 0;
+        this.voteAverage = in.readDouble();
+        this.title = in.readString();
+        this.popularity = in.readDouble();
+        this.posterPath = in.readString();
+        this.originalLanguage = in.readString();
+        this.originalTitle = in.readString();
+        this.backdropPath = in.readString();
+        this.adult = in.readByte() != 0;
+        this.overview = in.readString();
+        this.releaseDate = in.readString();
+    }
 
     public int getVoteCount() {
         return voteCount;
@@ -149,7 +173,6 @@ public class MovieItems implements Parcelable {
         this.releaseDate = releaseDate;
     }
 
-
     @Override
     public int describeContents() {
         return 0;
@@ -163,7 +186,7 @@ public class MovieItems implements Parcelable {
         dest.writeDouble(this.voteAverage);
         dest.writeString(this.title);
         dest.writeDouble(this.popularity);
-        dest.writeString("https://image.tmdb.org/t/p/w185"+this.posterPath);
+        dest.writeString("https://image.tmdb.org/t/p/w185" + this.posterPath);
         dest.writeString(this.originalLanguage);
         dest.writeString(this.originalTitle);
         dest.writeString(this.backdropPath);
@@ -171,35 +194,4 @@ public class MovieItems implements Parcelable {
         dest.writeString(this.overview);
         dest.writeString(this.releaseDate);
     }
-
-    public MovieItems() {
-    }
-
-    protected MovieItems(Parcel in) {
-        this.voteCount = in.readInt();
-        this.id = in.readInt();
-        this.video = in.readByte() != 0;
-        this.voteAverage = in.readDouble();
-        this.title = in.readString();
-        this.popularity = in.readDouble();
-        this.posterPath = in.readString();
-        this.originalLanguage = in.readString();
-        this.originalTitle = in.readString();
-        this.backdropPath = in.readString();
-        this.adult = in.readByte() != 0;
-        this.overview = in.readString();
-        this.releaseDate = in.readString();
-    }
-
-    public static final Parcelable.Creator<MovieItems> CREATOR = new Parcelable.Creator<MovieItems>() {
-        @Override
-        public MovieItems createFromParcel(Parcel source) {
-            return new MovieItems(source);
-        }
-
-        @Override
-        public MovieItems[] newArray(int size) {
-            return new MovieItems[size];
-        }
-    };
 }

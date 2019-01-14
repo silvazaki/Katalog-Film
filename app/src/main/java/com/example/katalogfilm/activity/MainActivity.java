@@ -3,8 +3,8 @@ package com.example.katalogfilm.activity;
 import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -14,20 +14,19 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.katalogfilm.R;
-import com.example.katalogfilm.utils.ViewOnItemClick;
 import com.example.katalogfilm.adapter.MovieAdapter;
 import com.example.katalogfilm.data.loopj.MyAsyncTaskLoaderSearchMovie;
 import com.example.katalogfilm.data.model.MovieItems;
+import com.example.katalogfilm.utils.ViewOnItemClick;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<MovieItems>> {
+    static final String EXTRAS_FILM = "EXTRAS_FILM";
     MovieAdapter adapter;
     EditText editTextPencarian;
     Button buttonCari;
     RecyclerView listMovie;
-
-    static final String EXTRAS_FILM = "EXTRAS_FILM";
     private String TAG = "hasil";
 
     @Override
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         String query = "captain";
         Bundle bundle = new Bundle();
-        bundle.putString(EXTRAS_FILM,query);
+        bundle.putString(EXTRAS_FILM, query);
 
         getLoaderManager().initLoader(0, bundle, this);
 
@@ -57,17 +56,17 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public Loader<ArrayList<MovieItems>> onCreateLoader(int i, Bundle bundle) {
         String query = "";
-        if (bundle != null){
+        if (bundle != null) {
             query = bundle.getString(EXTRAS_FILM);
         }
 
         Log.d(TAG, "onCreateLoader: ");
-        return new MyAsyncTaskLoaderSearchMovie(this,query);
+        return new MyAsyncTaskLoaderSearchMovie(this, query);
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<MovieItems>> loader, ArrayList<MovieItems> movieItems) {
-        Log.e(TAG, "onLoadFinished: "+movieItems.get(0).getTitle());
+        Log.e(TAG, "onLoadFinished: " + movieItems.get(0).getTitle());
         adapter.setData(movieItems);
     }
 
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-    public void setOnClick(){
+    public void setOnClick() {
 
 
         buttonCari.setOnClickListener(new View.OnClickListener() {
@@ -91,11 +90,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 String query = editTextPencarian.getText().toString();
 
-                if (TextUtils.isEmpty(query))return;
+                if (TextUtils.isEmpty(query)) return;
 
                 Bundle bundle = new Bundle();
-                bundle.putString(EXTRAS_FILM,query);
-                getLoaderManager().restartLoader(0,bundle,MainActivity.this);
+                bundle.putString(EXTRAS_FILM, query);
+                getLoaderManager().restartLoader(0, bundle, MainActivity.this);
             }
         });
 

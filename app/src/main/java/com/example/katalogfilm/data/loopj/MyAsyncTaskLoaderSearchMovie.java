@@ -24,12 +24,11 @@ import cz.msebera.android.httpclient.Header;
 
 public class MyAsyncTaskLoaderSearchMovie extends AsyncTaskLoader<ArrayList<MovieItems>> {
 
+    ProgressDialog dialog;
     private ArrayList<MovieItems> mData;
     private boolean mHasResult = false;
     private String query;
     private String TAG = "hasil";
-
-    ProgressDialog dialog;
 
     public MyAsyncTaskLoaderSearchMovie(Context context, String query) {
         super(context);
@@ -77,8 +76,8 @@ public class MyAsyncTaskLoaderSearchMovie extends AsyncTaskLoader<ArrayList<Movi
         SyncHttpClient client = new SyncHttpClient();
 
         final ArrayList<MovieItems> movieItemses = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/search/movie?api_key=3dce2cc3191c483d42c878e6409fd560&query="+query;
-        Log.e(TAG, "loadInBackground: "+ url);
+        String url = "https://api.themoviedb.org/3/search/movie?api_key=3dce2cc3191c483d42c878e6409fd560&query=" + query;
+        Log.e(TAG, "loadInBackground: " + url);
 
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -102,19 +101,19 @@ public class MyAsyncTaskLoaderSearchMovie extends AsyncTaskLoader<ArrayList<Movi
                     JSONArray results = obj.getJSONArray("results");
                     for (int i = 0; i < results.length(); i++) {
                         movieItemses.add(gson.fromJson(results.getString(i), MovieItems.class));
-                        Log.e(TAG, "onSuccess: "+movieItemses.get(i).getTitle());
+                        Log.e(TAG, "onSuccess: " + movieItemses.get(i).getTitle());
                     }
                     dialog.dismiss();
                 } catch (Exception e) {
                     e.printStackTrace();
-                    Log.e(TAG, "onSuccess: "+e);
+                    Log.e(TAG, "onSuccess: " + e);
                 }
 
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.e(TAG, "onFailure: "+ error.getMessage());
+                Log.e(TAG, "onFailure: " + error.getMessage());
                 dialog.dismiss();
             }
 

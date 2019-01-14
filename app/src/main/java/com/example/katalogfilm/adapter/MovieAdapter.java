@@ -10,8 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.katalogfilm.R;
-import com.example.katalogfilm.utils.ViewOnItemClick;
 import com.example.katalogfilm.data.model.MovieItems;
+import com.example.katalogfilm.utils.ViewOnItemClick;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         notifyDataSetChanged();
     }
 
-    public void setData(List<MovieItems> dataList){
+    public void setData(List<MovieItems> dataList) {
         data.clear();
         data.addAll(dataList);
         notifyDataSetChanged();
@@ -40,7 +40,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         this.callback = callback;
     }
 
-    public MovieItems getItem(int position){
+    public MovieItems getItem(int position) {
         return data.get(position);
     }
 
@@ -48,7 +48,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.movie_items, viewGroup, false);
         final MovieHolder holder = new MovieHolder(view);
-        if(callback!=null){
+        if (callback != null) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,7 +65,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         movieHolder.tvTitle.setText(m.getTitle());
         movieHolder.tvDesc.setText(m.getOverview());
         Picasso.with(context)
-                .load("https://image.tmdb.org/t/p/w185"+m.getPosterPath())
+                .load("https://image.tmdb.org/t/p/w185" + m.getPosterPath())
                 .into(movieHolder.imgCover);
 
     }
@@ -76,7 +76,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     }
 
 
-    class MovieHolder extends RecyclerView.ViewHolder{
+    class MovieHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle, tvDesc;
         ImageView imgCover;

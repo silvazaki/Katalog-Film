@@ -2,5 +2,15 @@
     <string name="app_name">Katalog Film</string>
     <string name="cari">Cari</string>
     <string name="masukkan_pencarian">Masukkan kata kunci</string>
-    <string name="nama_film">Nama Film</string>
+    <string name="title">Captain Amerika</string>
+    <string name="overview">The new world order</string>
+    <string name="detail_viewer">7.0</string>
+    <string name="viewer">Viewers</string>
+    <string name="detail_rating">7.0</string>
+    <string name="rating">Rating</string>
+    <string name="language">EN</string>
+    <string name="detail_language">language</string>
+    <string name="detail_release">Release</string>
+    <string name="release">Release</string>
+    <string name="overview2">Overview</string>
 </resources>
