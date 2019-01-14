@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.example.katalogfilm.activity.DetailMovieActivity">
+    tools:context=".ui.activity.DetailMovieActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/img_detail"
@@ -47,7 +47,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/viewer" />
+                android:text="@string/viewer" />
         </LinearLayout>
 
         <View
@@ -73,7 +73,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/rating" />
+                android:text="@string/rating" />
         </LinearLayout>
 
         <View
@@ -99,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="@string/detail_language" />
+                android:text="@string/detail_language" />
         </LinearLayout>
 
     </LinearLayout>
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="@string/detail_release" />
+            android:text="@string/detail_release" />
 
         <TextView
             android:id="@+id/tv_release"
@@ -132,7 +132,7 @@
             android:layout_marginTop="@dimen/activity_horizontal_margin"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="@string/overview2" />
+            android:text="@string/overview2" />
 
         <TextView
             android:id="@+id/tv_overview"

@@ -1,4 +1,4 @@
-package com.example.katalogfilm.activity;
+package com.example.katalogfilm.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +11,7 @@ import com.squareup.picasso.Picasso;
 
 public class DetailMovieActivity extends AppCompatActivity {
 
-    static final String MOVIE_DETAIL = "MOVIE_DETAIL";
+    public static final String MOVIE_DETAIL = "MOVIE_DETAIL";
     ImageView imgDetail;
     TextView title, rating, language, release, overview, popular;
     MovieItems items;

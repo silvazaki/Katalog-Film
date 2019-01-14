@@ -1,16 +1,22 @@
 <resources>
     <string name="app_name">Katalog Film</string>
     <string name="cari">Cari</string>
-    <string name="masukkan_pencarian">Masukkan kata kunci</string>
+    <string name="masukkan_pencarian">Judul Film...</string>
     <string name="title">Captain Amerika</string>
-    <string name="overview">The new world order</string>
+    <string name="list_overview">The new world order</string>
     <string name="detail_viewer">7.0</string>
-    <string name="viewer">Viewers</string>
+    <string name="viewer">Penonton</string>
     <string name="detail_rating">7.0</string>
-    <string name="rating">Rating</string>
+    <string name="rating">Penilaian</string>
     <string name="language">EN</string>
-    <string name="detail_language">language</string>
-    <string name="detail_release">Release</string>
-    <string name="release">Release</string>
-    <string name="overview2">Overview</string>
+    <string name="detail_language">Bahasa</string>
+    <string name="detail_release">Rilis</string>
+    <string name="release">Rilis</string>
+    <string name="overview2">Sinopsis</string>
+    <string name="bahasa">id-ID</string>
+    <string name="title_now_playing">Sekarang Tayang</string>
+    <string name="title_upcoming">Akan Datang</string>
+    <string name="title_search">Pencarian Film</string>
+    <string name="loading">sedang memuat...</string>
+    <string name="setting">Pengaturan Bahasa</string>
 </resources>

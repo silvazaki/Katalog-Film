@@ -23,22 +23,20 @@ import cz.msebera.android.httpclient.Header;
  * Created by User on 1/12/2019.
  */
 
-public class MyAsyncTaskLoaderSearchMovie extends AsyncTaskLoader<ArrayList<MovieItems>> {
+public class MyAsyncTaskLoaderNowPlayingMovie extends AsyncTaskLoader<ArrayList<MovieItems>> {
 
     ProgressDialog dialog;
     private ArrayList<MovieItems> mData;
     private boolean mHasResult = false;
-    private String query;
     private String TAG = "hasil";
     private String language;
 
-    public MyAsyncTaskLoaderSearchMovie(Context context, String query, String language) {
+    public MyAsyncTaskLoaderNowPlayingMovie(Context context, String language) {
         super(context);
 
         onContentChanged();
         this.language = language;
         dialog = new ProgressDialog(context);
-        this.query = query;
 
     }
 
@@ -79,10 +77,8 @@ public class MyAsyncTaskLoaderSearchMovie extends AsyncTaskLoader<ArrayList<Movi
         SyncHttpClient client = new SyncHttpClient();
 
         final ArrayList<MovieItems> movieItemses = new ArrayList<>();
-        String url = "https://api.themoviedb.org/3/search/movie" +
-                "?api_key=3dce2cc3191c483d42c878e6409fd560" +
-                "&language=" + language + "" +
-                "&query=" + query;
+        String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=3dce2cc3191c483d42c878e6409fd560" +
+                "&language=" + language + "";
         Log.e(TAG, "loadInBackground: " + url);
 
         client.get(url, new AsyncHttpResponseHandler() {

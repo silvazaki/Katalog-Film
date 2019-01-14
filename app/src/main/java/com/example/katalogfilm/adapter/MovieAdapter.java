@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.katalogfilm.R;
 import com.example.katalogfilm.data.model.MovieItems;
-import com.example.katalogfilm.utils.ViewOnItemClick;
+import com.example.katalogfilm.util.ViewOnItemClick;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

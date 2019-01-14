@@ -1,4 +1,4 @@
-package com.example.katalogfilm.utils;
+package com.example.katalogfilm.util;
 
 import android.view.View;
 
