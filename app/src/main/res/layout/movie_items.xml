@@ -31,6 +31,8 @@
             tools:text="@string/title" />
 
         <TextView
+            android:ellipsize="end"
+            android:maxLines="5"
             android:id="@+id/tv_item_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

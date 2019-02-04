@@ -55,13 +55,14 @@ public class DetailMovieActivity extends AppCompatActivity {
         language = findViewById(R.id.tv_language);
         release = findViewById(R.id.tv_release);
         overview = findViewById(R.id.tv_overview);
-        toolbar.setTitle(items.getTitle());
 
         items = getIntent().getParcelableExtra(MOVIE_DETAIL);
 
         setSupportActionBar(toolbar);
-        if (getSupportActionBar() != null)
+        if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            toolbar.setTitle(items.getTitle());
+        }
 
 
         title.setText(items.getTitle());
