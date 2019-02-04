@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">Katalog Film</string>
-    <string name="cari">Cari</string>
-    <string name="masukkan_pencarian">Judul Film...</string>
+    <string name="cari">Pencarian Film...</string>
+    <string name="masukkan_pencarian">Masukkan judul film...</string>
     <string name="title">Captain Amerika</string>
-    <string name="list_overview">The new world order</string>
     <string name="detail_viewer">7.0</string>
     <string name="viewer">Penonton</string>
     <string name="detail_rating">7.0</string>
@@ -16,7 +15,13 @@
     <string name="bahasa">id-ID</string>
     <string name="title_now_playing">Sekarang Tayang</string>
     <string name="title_upcoming">Akan Datang</string>
-    <string name="title_search">Pencarian Film</string>
+    <string name="title_favorite">Film Favorit</string>
     <string name="loading">sedang memuat...</string>
-    <string name="setting">Pengaturan Bahasa</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="pengaturan">Pengaturan</string>
+    <string name="ganti_bahasa">Ganti Bahasa...</string>
+    <string name="searcht" formatted="false">Ditemukan %d hasil untuk \'%s\'</string>
+    <string name="seaarchf" formatted="false">Tidak ditemukan hasil untuk \'%s\'</string>
+    <string name="query_hint">Cari...</string>
 </resources>

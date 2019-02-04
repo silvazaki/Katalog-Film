@@ -1,49 +1,146 @@
 package com.example.katalogfilm.ui.activity;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.katalogfilm.R;
+import com.example.katalogfilm.data.database.MovieHelper;
 import com.example.katalogfilm.data.model.MovieItems;
 import com.squareup.picasso.Picasso;
+
+import static com.example.katalogfilm.data.database.DatabaseContract.CONTENT_URI;
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.DESCRIPTION;
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.ID_FILM;
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.IMAGE;
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.LANGUAGE;
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.POPULARITY;
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.RATING;
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.RELEASE;
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.TITLE;
 
 public class DetailMovieActivity extends AppCompatActivity {
 
     public static final String MOVIE_DETAIL = "MOVIE_DETAIL";
-    ImageView imgDetail;
+    ImageView imgDetail, imgFavorite;
     TextView title, rating, language, release, overview, popular;
     MovieItems items;
+    Toolbar toolbar;
+    String TAG = "hasil-detail";
+
+    private boolean isEdit = false;
+
+    private MovieItems movieItems;
+    private MovieHelper movieHelper;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
-        items = getIntent().getParcelableExtra(MOVIE_DETAIL);
 
-        if (items != null) {
-            getSupportActionBar().setTitle(items.getTitle());
-        }
-
+        toolbar = findViewById(R.id.toolbar);
         imgDetail = findViewById(R.id.img_detail);
+        imgFavorite = findViewById(R.id.img_fav);
         title = findViewById(R.id.tv_title);
         rating = findViewById(R.id.tv_rating);
         popular = findViewById(R.id.tv_popularity);
         language = findViewById(R.id.tv_language);
         release = findViewById(R.id.tv_release);
         overview = findViewById(R.id.tv_overview);
+        toolbar.setTitle(items.getTitle());
 
-        setUp();
+        items = getIntent().getParcelableExtra(MOVIE_DETAIL);
+
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null)
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+
+        title.setText(items.getTitle());
+        overview.setText(items.getOverview());
+        Picasso.with(DetailMovieActivity.this).load("https://image.tmdb.org/t/p/w185" + items.getPosterPath()).into(imgDetail);
+        if (items.getOriginalLanguage() != null) {
+            popular.setText(String.valueOf(items.getPopularity()));
+            rating.setText(String.valueOf(items.getVoteAverage()));
+            language.setText(items.getOriginalLanguage().toUpperCase());
+            release.setText(items.getReleaseDate());
+        }
+
+        movieHelper = new MovieHelper(this);
+        movieHelper.open();
+
+        uri = getIntent().getData();
+
+        if (uri != null) {
+            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
+            if (cursor != null) {
+
+                if (cursor.moveToFirst()) {
+                    movieItems = new MovieItems(cursor);
+                }
+                cursor.close();
+            }
+        }
+        if (movieItems != null) {
+            isEdit = true;
+            imgFavorite.setColorFilter(getResources().getColor(R.color.colorRed));
+        } else {
+            isEdit = false;
+            imgFavorite.setColorFilter(getResources().getColor(R.color.colorWhite));
+        }
+
+        if (items.getOriginalLanguage() == null)
+            setUp();
+
+        setOnClick();
+    }
+
+    void setOnClick() {
+        imgFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isEdit) {
+                    getContentResolver().delete(uri, null, null);
+                    isEdit = false;
+                    imgFavorite.setColorFilter(getResources().getColor(R.color.colorWhite));
+                    Log.e(TAG, "onClick: true");
+                } else {
+                    ContentValues values = new ContentValues();
+                    values.put(ID_FILM, items.getId());
+                    values.put(TITLE, items.getTitle());
+                    values.put(DESCRIPTION, items.getOverview());
+                    values.put(IMAGE, items.getPosterPath());
+                    values.put(RATING, items.getVoteAverage());
+                    values.put(POPULARITY, String.valueOf(items.getPopularity()));
+                    values.put(RELEASE, items.getReleaseDate());
+                    values.put(LANGUAGE, items.getOriginalLanguage());
+
+                    getContentResolver().insert(CONTENT_URI, values);
+
+                    isEdit = true;
+                    imgFavorite.setColorFilter(getResources().getColor(R.color.colorRed));
+
+                    Log.e(TAG, "onClick: false");
+                }
+            }
+        });
     }
 
     void setUp() {
-        Picasso.with(DetailMovieActivity.this).load(items.getPosterPath()).into(imgDetail);
-        title.setText(items.getTitle());
-        popular.setText(String.valueOf(items.getPopularity()));
-        rating.setText(String.valueOf(items.getVoteAverage()));
-        language.setText(items.getOriginalLanguage().toUpperCase());
-        release.setText(items.getReleaseDate());
-        overview.setText(items.getOverview());
+        Picasso.with(DetailMovieActivity.this).load(movieItems.getPosterPath()).into(imgDetail);
+        popular.setText(String.valueOf(movieItems.getPopularity()));
+        rating.setText(String.valueOf(movieItems.getVoteAverage()));
+        language.setText(movieItems.getOriginalLanguage().toUpperCase());
+        release.setText(movieItems.getReleaseDate());
     }
+
+
 }

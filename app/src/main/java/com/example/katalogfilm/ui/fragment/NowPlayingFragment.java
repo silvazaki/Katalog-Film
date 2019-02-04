@@ -2,6 +2,7 @@ package com.example.katalogfilm.ui.fragment;
 
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,19 +11,20 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.katalogfilm.R;
 import com.example.katalogfilm.adapter.MovieAdapter;
-import com.example.katalogfilm.data.loopj.MyAsyncTaskLoaderNowPlayingMovie;
 import com.example.katalogfilm.data.model.MovieItems;
+import com.example.katalogfilm.data.network.MyAsyncTaskLoaderNowPlayingMovie;
 import com.example.katalogfilm.ui.activity.DetailMovieActivity;
 import com.example.katalogfilm.util.ViewOnItemClick;
 
 import java.util.ArrayList;
+
+import static com.example.katalogfilm.data.database.DatabaseContract.CONTENT_URI;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,7 +33,6 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
 
     MovieAdapter adapter;
     RecyclerView listMovie;
-    private String TAG = "hasil";
     private String language;
 
 
@@ -51,7 +52,6 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
         View view = inflater.inflate(R.layout.fragment_now_playing, container, false);
 
 
-        Log.e(TAG, "onCreateView: ");
         listMovie = view.findViewById(R.id.rv_nowplaying);
 
         adapter = new MovieAdapter(getContext());
@@ -63,6 +63,13 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
 
         setOnClick();
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Bundle args = null;
+        getLoaderManager().restartLoader(0, args, this);
     }
 
     @NonNull
@@ -88,7 +95,9 @@ public class NowPlayingFragment extends Fragment implements LoaderManager.Loader
             @Override
             public void onItemClick(int position, View view) {
                 Intent intent = new Intent(getContext(), DetailMovieActivity.class);
+                Uri uri = Uri.parse(CONTENT_URI + "/" + adapter.getItem(position).getId());
                 intent.putExtra(DetailMovieActivity.MOVIE_DETAIL, adapter.getItem(position));
+                intent.setData(uri);
                 startActivity(intent);
             }
         });

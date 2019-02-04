@@ -2,81 +2,61 @@ package com.example.katalogfilm.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import com.example.katalogfilm.R;
+import com.example.katalogfilm.adapter.PagerAdapter;
+import com.example.katalogfilm.ui.fragment.FavoriteFragment;
 import com.example.katalogfilm.ui.fragment.NowPlayingFragment;
-import com.example.katalogfilm.ui.fragment.SearchFragment;
+import com.example.katalogfilm.ui.fragment.SettingFragment;
 import com.example.katalogfilm.ui.fragment.UpcomingFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            switch (item.getItemId()) {
-                case R.id.now_playing:
-                    getSupportActionBar().setTitle(getResources().getString(R.string.title_now_playing));
-                    changeFragment(new NowPlayingFragment());
-                    return true;
-                case R.id.up_coming:
-                    getSupportActionBar().setTitle(getResources().getString(R.string.title_upcoming));
-                    changeFragment(new UpcomingFragment());
-                    return true;
-                case R.id.search_movie:
-                    getSupportActionBar().setTitle(getResources().getString(R.string.title_search));
-                    changeFragment(new SearchFragment());
-                    return true;
-            }
-            return false;
-        }
-    };
-
+    ViewPager viewPager;
+    TabLayout tabLayout;
+    LinearLayout searchLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        getSupportActionBar().setTitle(getResources().getString(R.string.title_now_playing));
-        changeFragment(new NowPlayingFragment());
+        viewPager = findViewById(R.id.view_pager);
+        tabLayout = findViewById(R.id.tab_layout);
+        searchLayout = findViewById(R.id.search_view);
+
+
+        tabLayout.setupWithViewPager(viewPager);
+        initPager();
+        searchLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SearchActivity.class));
+            }
+        });
+
+        viewPager.setCurrentItem(0, false);
+
     }
 
-
-    public void changeFragment(Fragment fragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        if (fragmentManager != null) {
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.fragment_container, fragment, Fragment.class.getSimpleName());
-            fragmentTransaction.commit();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_change_settings) {
-            Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
-            startActivity(mIntent);
-        }
-        return super.onOptionsItemSelected(item);
+    private void initPager() {
+        PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        pagerAdapter.addFragment(new NowPlayingFragment(), getResources().getString(R.string.title_now_playing));
+        pagerAdapter.addFragment(new UpcomingFragment(), getResources().getString(R.string.title_upcoming));
+        pagerAdapter.addFragment(new FavoriteFragment(), getResources().getString(R.string.title_favorite));
+        pagerAdapter.addFragment(new SettingFragment(), "Setting");
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout.getTabAt(0).setIcon(R.drawable.ic_date);
+        tabLayout.getTabAt(1).setIcon(R.drawable.ic_update);
+        tabLayout.getTabAt(2).setIcon(R.drawable.ic_favorite);
+        tabLayout.getTabAt(3).setIcon(R.drawable.ic_settings);
+        int limit = (pagerAdapter.getCount() > 1 ? pagerAdapter.getCount() - 1 : 1);
+        viewPager.setOffscreenPageLimit(limit);
     }
 }

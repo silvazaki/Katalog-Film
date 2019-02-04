@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,25 +16,18 @@ import com.example.katalogfilm.data.model.MovieItems;
 import com.example.katalogfilm.util.ViewOnItemClick;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
-import java.util.List;
 
-
-public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
-
-    private List<MovieItems> data;
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewholder> {
+    private Cursor listNotes;
     private Context context;
     private ViewOnItemClick.MovieItemCallback callback;
 
-    public MovieAdapter(Context context) {
-        data = new ArrayList<>();
+    public FavoriteAdapter(Context context) {
         this.context = context;
-        notifyDataSetChanged();
     }
 
-    public void setData(List<MovieItems> dataList) {
-        data.clear();
-        data.addAll(dataList);
+    public void setListNotes(Cursor listNotes) {
+        this.listNotes = listNotes;
         notifyDataSetChanged();
     }
 
@@ -41,14 +35,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         this.callback = callback;
     }
 
-    public MovieItems getItem(int position) {
-        return data.get(position);
-    }
-
     @Override
-    public MovieHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
+    public FavoriteViewholder onCreateViewHolder(@NonNull ViewGroup viewGroup, final int i) {
         final View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.movie_items, viewGroup, false);
-        final MovieHolder holder = new MovieHolder(view);
+        final FavoriteAdapter.FavoriteViewholder holder = new FavoriteAdapter.FavoriteViewholder(view);
         if (callback != null) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -61,34 +51,36 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MovieHolder movieHolder, int i) {
-        MovieItems m = data.get(i);
-        movieHolder.tvTitle.setText(m.getTitle());
-        movieHolder.tvDesc.setText(m.getOverview());
+    public void onBindViewHolder(FavoriteViewholder holder, int position) {
+        final MovieItems items = getItem(position);
+        holder.tvTitle.setText(items.getTitle());
+        holder.tvDescription.setText(items.getOverview());
         Picasso.with(context)
-                .load("https://image.tmdb.org/t/p/w185" + m.getPosterPath())
-                .into(movieHolder.imgCover);
-
+                .load("https://image.tmdb.org/t/p/w185" + items.getPosterPath())
+                .into(holder.imgCover);
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        if (listNotes == null) return 0;
+        return listNotes.getCount();
     }
 
+    public MovieItems getItem(int position) {
+        if (!listNotes.moveToPosition(position)) {
+        }
+        return new MovieItems(listNotes);
+    }
 
-    class MovieHolder extends RecyclerView.ViewHolder {
-
-        TextView tvTitle, tvDesc;
+    class FavoriteViewholder extends RecyclerView.ViewHolder {
+        TextView tvTitle, tvDescription;
         ImageView imgCover;
 
-        public MovieHolder(@NonNull View itemView) {
+        FavoriteViewholder(View itemView) {
             super(itemView);
-            imgCover = itemView.findViewById(R.id.img_item_photo);
             tvTitle = itemView.findViewById(R.id.tv_item_name);
-            tvDesc = itemView.findViewById(R.id.tv_item_desc);
+            tvDescription = itemView.findViewById(R.id.tv_item_desc);
+            imgCover = itemView.findViewById(R.id.img_item_photo);
         }
     }
-
 }
-

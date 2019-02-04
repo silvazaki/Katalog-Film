@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Movie Catalog</string>
-    <string name="cari">Search...</string>
-    <string name="masukkan_pencarian">Movie Title...</string>
+    <string name="cari">Search Movies...</string>
+    <string name="masukkan_pencarian">Input the movie title..</string>
     <string name="title">Captain Amerika</string>
-    <string name="list_overview">The new world order</string>
     <string name="detail_viewer">7.0</string>
     <string name="viewer">Viewers</string>
     <string name="detail_rating">7.0</string>
@@ -17,7 +16,14 @@
     <string name="bahasa">en-US</string>
     <string name="title_now_playing">Now Playing</string>
     <string name="title_upcoming">Up Coming</string>
-    <string name="title_search">Search Movie</string>
+    <string name="title_favorite">Favorite Movies</string>
     <string name="loading">loading...</string>
-    <string name="setting">Language Setting</string>
+
+
+    <string name="pengaturan">Setting</string>
+    <string name="ganti_bahasa">Change Language...</string>
+    <string name="searcht" formatted="false">Found %d result for \'%s\'</string>
+    <string name="seaarchf" formatted="false">No result for \'%s\'</string>
+    <string name="query_hint">Search...</string>
+
 </resources>

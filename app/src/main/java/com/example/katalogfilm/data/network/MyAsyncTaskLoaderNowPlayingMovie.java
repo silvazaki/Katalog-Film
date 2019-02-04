@@ -1,11 +1,9 @@
-package com.example.katalogfilm.data.loopj;
+package com.example.katalogfilm.data.network;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
-import com.example.katalogfilm.R;
 import com.example.katalogfilm.data.model.MovieItems;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,7 +23,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class MyAsyncTaskLoaderNowPlayingMovie extends AsyncTaskLoader<ArrayList<MovieItems>> {
 
-    ProgressDialog dialog;
     private ArrayList<MovieItems> mData;
     private boolean mHasResult = false;
     private String TAG = "hasil";
@@ -36,14 +33,11 @@ public class MyAsyncTaskLoaderNowPlayingMovie extends AsyncTaskLoader<ArrayList<
 
         onContentChanged();
         this.language = language;
-        dialog = new ProgressDialog(context);
 
     }
 
     @Override
     protected void onStartLoading() {
-        dialog.setMessage(getContext().getResources().getString(R.string.loading));
-        dialog.show();
         if (takeContentChanged())
             forceLoad();
         else if (mHasResult)
@@ -54,7 +48,6 @@ public class MyAsyncTaskLoaderNowPlayingMovie extends AsyncTaskLoader<ArrayList<
     public void deliverResult(final ArrayList<MovieItems> data) {
         mData = data;
         mHasResult = true;
-        dialog.dismiss();
         super.deliverResult(data);
     }
 
@@ -79,13 +72,11 @@ public class MyAsyncTaskLoaderNowPlayingMovie extends AsyncTaskLoader<ArrayList<
         final ArrayList<MovieItems> movieItemses = new ArrayList<>();
         String url = "https://api.themoviedb.org/3/movie/now_playing?api_key=3dce2cc3191c483d42c878e6409fd560" +
                 "&language=" + language + "";
-        Log.e(TAG, "loadInBackground: " + url);
 
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
             public void onFinish() {
                 super.onFinish();
-                dialog.dismiss();
             }
 
             @Override
@@ -103,9 +94,7 @@ public class MyAsyncTaskLoaderNowPlayingMovie extends AsyncTaskLoader<ArrayList<
                     JSONArray results = obj.getJSONArray("results");
                     for (int i = 0; i < results.length(); i++) {
                         movieItemses.add(gson.fromJson(results.getString(i), MovieItems.class));
-                        Log.e(TAG, "onSuccess: " + movieItemses.get(i).getTitle());
                     }
-                    dialog.dismiss();
                 } catch (Exception e) {
                     e.printStackTrace();
                     Log.e(TAG, "onSuccess: " + e);
@@ -116,7 +105,6 @@ public class MyAsyncTaskLoaderNowPlayingMovie extends AsyncTaskLoader<ArrayList<
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Log.e(TAG, "onFailure: " + error.getMessage());
-                dialog.dismiss();
             }
 
         });

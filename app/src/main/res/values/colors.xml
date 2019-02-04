@@ -2,5 +2,14 @@
 <resources>
     <color name="colorPrimary">#24c286</color>
     <color name="colorPrimaryDark">#11998e</color>
-    <color name="colorAccent">#f48fb1</color>
+    <color name="colorAccent">#24c286</color>
+
+    <color name="colorBG">#f2f2f2</color>
+    <color name="colorTxt">#424242</color>
+
+    <color name="colorWhite">#ffffff</color>
+    <color name="gradStart">#11998e</color>
+    <color name="gradEnd">#26c785</color>
+
+    <color name="colorRed">#ff1744</color>
 </resources>

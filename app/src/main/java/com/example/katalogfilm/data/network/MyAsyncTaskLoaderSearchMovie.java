@@ -1,8 +1,8 @@
-package com.example.katalogfilm.data.loopj;
+package com.example.katalogfilm.data.network;
 
 import android.app.ProgressDialog;
+import android.content.AsyncTaskLoader;
 import android.content.Context;
-import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
 
 import com.example.katalogfilm.R;
@@ -83,7 +83,6 @@ public class MyAsyncTaskLoaderSearchMovie extends AsyncTaskLoader<ArrayList<Movi
                 "?api_key=3dce2cc3191c483d42c878e6409fd560" +
                 "&language=" + language + "" +
                 "&query=" + query;
-        Log.e(TAG, "loadInBackground: " + url);
 
         client.get(url, new AsyncHttpResponseHandler() {
             @Override
@@ -107,7 +106,6 @@ public class MyAsyncTaskLoaderSearchMovie extends AsyncTaskLoader<ArrayList<Movi
                     JSONArray results = obj.getJSONArray("results");
                     for (int i = 0; i < results.length(); i++) {
                         movieItemses.add(gson.fromJson(results.getString(i), MovieItems.class));
-                        Log.e(TAG, "onSuccess: " + movieItemses.get(i).getTitle());
                     }
                     dialog.dismiss();
                 } catch (Exception e) {

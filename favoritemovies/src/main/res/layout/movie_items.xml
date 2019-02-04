@@ -6,7 +6,6 @@
     android:orientation="horizontal"
     android:padding="8dp">
 
-
     <ImageView
         android:id="@+id/img_item_photo"
         android:layout_width="110dp"
@@ -36,7 +35,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorTxt"
             android:textSize="12sp"
-            tools:text="@string/overview2" />
+            tools:text="@string/description" />
     </LinearLayout>
 
 </LinearLayout>

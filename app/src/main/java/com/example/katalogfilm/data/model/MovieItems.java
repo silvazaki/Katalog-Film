@@ -1,10 +1,16 @@
 package com.example.katalogfilm.data.model;
 
+import android.database.Cursor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.katalogfilm.data.database.DatabaseContract;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+
+import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.ID_FILM;
+import static com.example.katalogfilm.data.database.DatabaseContract.getColumnInt;
+import static com.example.katalogfilm.data.database.DatabaseContract.getColumnString;
 
 /**
  * Created by User on 1/12/2019.
@@ -29,7 +35,7 @@ public class MovieItems implements Parcelable {
     private boolean video;
     @SerializedName("vote_average")
     @Expose
-    private double voteAverage;
+    private String voteAverage;
     private String title;
     private double popularity;
     @SerializedName("poster_path")
@@ -53,11 +59,22 @@ public class MovieItems implements Parcelable {
     public MovieItems() {
     }
 
-    protected MovieItems(Parcel in) {
+    public MovieItems(Cursor cursor) {
+        this.id = getColumnInt(cursor, ID_FILM);
+        this.title = getColumnString(cursor, DatabaseContract.MovieColumns.TITLE);
+        this.overview = getColumnString(cursor, DatabaseContract.MovieColumns.DESCRIPTION);
+        this.posterPath = getColumnString(cursor, DatabaseContract.MovieColumns.IMAGE);
+        this.popularity = getColumnInt(cursor, DatabaseContract.MovieColumns.POPULARITY);
+        this.voteAverage = getColumnString(cursor, DatabaseContract.MovieColumns.RATING);
+        this.originalLanguage = getColumnString(cursor, DatabaseContract.MovieColumns.LANGUAGE);
+        this.releaseDate = getColumnString(cursor, DatabaseContract.MovieColumns.RELEASE);
+    }
+
+    public MovieItems(Parcel in) {
         this.voteCount = in.readInt();
         this.id = in.readInt();
         this.video = in.readByte() != 0;
-        this.voteAverage = in.readDouble();
+        this.voteAverage = in.readString();
         this.title = in.readString();
         this.popularity = in.readDouble();
         this.posterPath = in.readString();
@@ -93,11 +110,11 @@ public class MovieItems implements Parcelable {
         this.video = video;
     }
 
-    public double getVoteAverage() {
+    public String getVoteAverage() {
         return voteAverage;
     }
 
-    public void setVoteAverage(double voteAverage) {
+    public void setVoteAverage(String voteAverage) {
         this.voteAverage = voteAverage;
     }
 
@@ -183,10 +200,10 @@ public class MovieItems implements Parcelable {
         dest.writeInt(this.voteCount);
         dest.writeInt(this.id);
         dest.writeByte(this.video ? (byte) 1 : (byte) 0);
-        dest.writeDouble(this.voteAverage);
+        dest.writeString(this.voteAverage);
         dest.writeString(this.title);
         dest.writeDouble(this.popularity);
-        dest.writeString("https://image.tmdb.org/t/p/w185" + this.posterPath);
+        dest.writeString(this.posterPath);
         dest.writeString(this.originalLanguage);
         dest.writeString(this.originalTitle);
         dest.writeString(this.backdropPath);
