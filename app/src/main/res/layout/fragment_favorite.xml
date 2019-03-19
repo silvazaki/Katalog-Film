@@ -13,7 +13,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:background="@color/colorBG"
             android:orientation="vertical">
@@ -29,7 +29,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <TextView
@@ -39,9 +39,9 @@
                         android:text="@string/title_favorite" />
 
                     <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_favorit"
+                        android:id="@+id/rv_favorite"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent">
+                        android:layout_height="wrap_content">
 
                     </android.support.v7.widget.RecyclerView>
                 </LinearLayout>

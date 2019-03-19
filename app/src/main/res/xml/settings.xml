@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:iconSpaceReserved="false">
+
+    <PreferenceCategory android:title="">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/notif_harian"
+            android:summary="@string/notif_setiap_hari"
+            android:title="@string/notifikasi_harian" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/notif_rilis"
+            android:summary="@string/notif_film_baru_dirilis"
+            android:title="@string/notifikasi_film_baru" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

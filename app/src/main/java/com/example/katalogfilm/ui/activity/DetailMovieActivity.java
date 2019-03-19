@@ -16,6 +16,9 @@ import com.example.katalogfilm.data.database.MovieHelper;
 import com.example.katalogfilm.data.model.MovieItems;
 import com.squareup.picasso.Picasso;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.example.katalogfilm.data.database.DatabaseContract.CONTENT_URI;
 import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.DESCRIPTION;
 import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumns.ID_FILM;
@@ -28,15 +31,29 @@ import static com.example.katalogfilm.data.database.DatabaseContract.MovieColumn
 
 public class DetailMovieActivity extends AppCompatActivity {
 
-    public static final String MOVIE_DETAIL = "MOVIE_DETAIL";
-    ImageView imgDetail, imgFavorite;
-    TextView title, rating, language, release, overview, popular;
-    MovieItems items;
+    @BindView(R.id.img_detail)
+    ImageView imgDetail;
+    @BindView(R.id.img_fav)
+    ImageView imgFavorite;
+    @BindView(R.id.tv_title)
+    TextView title;
+    @BindView(R.id.tv_rating)
+    TextView rating;
+    @BindView(R.id.tv_popularity)
+    TextView popular;
+    @BindView(R.id.tv_language)
+    TextView language;
+    @BindView(R.id.tv_release)
+    TextView release;
+    @BindView(R.id.tv_overview)
+    TextView overview;
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
-    String TAG = "hasil-detail";
 
+    public static final String MOVIE_DETAIL = "MOVIE_DETAIL";
+    private static String TAG = "hasil-detail";
     private boolean isEdit = false;
-
+    private MovieItems items;
     private MovieItems movieItems;
     private MovieHelper movieHelper;
     private Uri uri;
@@ -45,17 +62,7 @@ public class DetailMovieActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_movie);
-
-        toolbar = findViewById(R.id.toolbar);
-        imgDetail = findViewById(R.id.img_detail);
-        imgFavorite = findViewById(R.id.img_fav);
-        title = findViewById(R.id.tv_title);
-        rating = findViewById(R.id.tv_rating);
-        popular = findViewById(R.id.tv_popularity);
-        language = findViewById(R.id.tv_language);
-        release = findViewById(R.id.tv_release);
-        overview = findViewById(R.id.tv_overview);
-
+        ButterKnife.bind(this);
         items = getIntent().getParcelableExtra(MOVIE_DETAIL);
 
         setSupportActionBar(toolbar);
@@ -63,7 +70,6 @@ public class DetailMovieActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             toolbar.setTitle(items.getTitle());
         }
-
 
         title.setText(items.getTitle());
         overview.setText(items.getOverview());

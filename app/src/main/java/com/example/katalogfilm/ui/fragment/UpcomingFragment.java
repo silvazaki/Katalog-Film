@@ -1,7 +1,6 @@
 package com.example.katalogfilm.ui.fragment;
 
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,9 +21,14 @@ import com.example.katalogfilm.adapter.MovieAdapter;
 import com.example.katalogfilm.data.model.MovieItems;
 import com.example.katalogfilm.data.network.MyAsyncTaskLoaderUpcomingMovie;
 import com.example.katalogfilm.ui.activity.DetailMovieActivity;
+import com.example.katalogfilm.util.DialogHelper;
 import com.example.katalogfilm.util.ViewOnItemClick;
 
 import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 import static com.example.katalogfilm.data.database.DatabaseContract.CONTENT_URI;
 
@@ -32,10 +37,16 @@ import static com.example.katalogfilm.data.database.DatabaseContract.CONTENT_URI
  */
 public class UpcomingFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<MovieItems>> {
 
-    MovieAdapter adapter;
+    @BindView(R.id.rv_upcoming)
     RecyclerView listMovie;
-    ProgressDialog dialog;
+    private Unbinder unbinder;
+
+    private static final String LIST_STATE = "listState";
+    private ArrayList<MovieItems> mListState = new ArrayList<>();
+
+    MovieAdapter adapter;
     private String language;
+    private AlertDialog loading;
 
     public UpcomingFragment() {
         // Required empty public constructor
@@ -44,54 +55,63 @@ public class UpcomingFragment extends Fragment implements LoaderManager.LoaderCa
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        unbinder.unbind();
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_upcoming, container, false);
-
-        listMovie = view.findViewById(R.id.rv_upcoming);
+        unbinder = ButterKnife.bind(this, view);
 
         adapter = new MovieAdapter(getContext());
         listMovie.setLayoutManager(new LinearLayoutManager(getContext()));
         listMovie.setAdapter(adapter);
 
+        loading = DialogHelper.loading(getContext());
+
         language = getResources().getString(R.string.bahasa);
 
-        dialog = new ProgressDialog(getContext());
-        dialog.setMessage("loading...");
-        dialog.show();
-        getLoaderManager().initLoader(0, savedInstanceState, this);
+        if (savedInstanceState == null) {
+            getLoaderManager().initLoader(0, savedInstanceState, this);
+        } else {
+            mListState = savedInstanceState.getParcelableArrayList(LIST_STATE);
+            adapter.setData(mListState);
+        }
 
         setOnClick();
         return view;
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        Bundle args = null;
-        getLoaderManager().restartLoader(0, args, this);
+    public void onSaveInstanceState(Bundle state) {
+        super.onSaveInstanceState(state);
+        state.putParcelableArrayList(LIST_STATE, mListState);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @NonNull
     @Override
     public Loader<ArrayList<MovieItems>> onCreateLoader(int id, @Nullable Bundle args) {
+        loading.show();
         return new MyAsyncTaskLoaderUpcomingMovie(getActivity(), language);
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<ArrayList<MovieItems>> loader, ArrayList<MovieItems> data) {
+        loading.dismiss();
         adapter.setData(data);
-        dialog.dismiss();
+        mListState = data;
     }
 
     @Override
     public void onLoaderReset(@NonNull Loader<ArrayList<MovieItems>> loader) {
+        loading.dismiss();
         adapter.setData(null);
     }
 

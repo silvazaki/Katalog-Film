@@ -1,7 +1,6 @@
 package com.example.katalogfilm.adapter;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +16,9 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder> {
@@ -76,17 +78,18 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         return data.size();
     }
 
-
     class MovieHolder extends RecyclerView.ViewHolder {
 
-        TextView tvTitle, tvDesc;
+        @BindView(R.id.tv_item_name)
+        TextView tvTitle;
+        @BindView(R.id.tv_item_desc)
+        TextView tvDesc;
+        @BindView(R.id.img_item_photo)
         ImageView imgCover;
 
         public MovieHolder(@NonNull View itemView) {
             super(itemView);
-            imgCover = itemView.findViewById(R.id.img_item_photo);
-            tvTitle = itemView.findViewById(R.id.tv_item_name);
-            tvDesc = itemView.findViewById(R.id.tv_item_desc);
+            ButterKnife.bind(this, itemView);
         }
     }
 

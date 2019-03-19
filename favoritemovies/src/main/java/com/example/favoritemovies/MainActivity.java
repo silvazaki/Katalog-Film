@@ -7,14 +7,14 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.example.favoritemovies.adapter.CursorFavoriteAdapter;
+import com.example.favoritemovies.adapter.FavoriteAdapter;
 
 import static com.example.favoritemovies.database.DatabaseContract.CONTENT_URI;
 
 public class MainActivity extends AppCompatActivity implements android.support.v4.app.LoaderManager.LoaderCallbacks<Cursor>,
         AdapterView.OnItemClickListener {
 
-    CursorFavoriteAdapter adapter;
+    FavoriteAdapter adapter;
     ListView listView;
     private final int LOAD_NOTES_ID = 110;
 
@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity implements android.support.v
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        adapter = new CursorFavoriteAdapter(this, null, true);
+        adapter = new FavoriteAdapter(this, null, true);
         listView = findViewById(R.id.listView);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
@@ -63,4 +63,6 @@ public class MainActivity extends AppCompatActivity implements android.support.v
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
     }
+
+
 }

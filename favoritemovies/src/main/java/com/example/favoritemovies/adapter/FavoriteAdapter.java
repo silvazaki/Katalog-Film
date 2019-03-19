@@ -22,9 +22,9 @@ import static com.example.favoritemovies.database.DatabaseContract.getColumnStri
  * Created by User on 1/28/2019.
  */
 
-public class CursorFavoriteAdapter extends CursorAdapter {
+public class FavoriteAdapter extends CursorAdapter {
 
-    public CursorFavoriteAdapter(Context context, Cursor c, boolean autoRequery) {
+    public FavoriteAdapter(Context context, Cursor c, boolean autoRequery) {
         super(context, c, autoRequery);
     }
 
@@ -50,13 +50,11 @@ public class CursorFavoriteAdapter extends CursorAdapter {
             tvTitle = view.findViewById(R.id.tv_item_name);
             tvDescription = view.findViewById(R.id.tv_item_desc);
             imgCover = view.findViewById(R.id.img_item_photo);
-
             tvTitle.setText(getColumnString(cursor,TITLE));
             tvDescription.setText(getColumnString(cursor,DESCRIPTION));
             Picasso.with(context)
                     .load("https://image.tmdb.org/t/p/w185" +getColumnString(cursor,IMAGE))
                     .into(imgCover);
-//            Log.e("hasil", "bindView: "+"https://image.tmdb.org/t/p/w185" +getColumnString(cursor,IMAGE) );
         }
     }
 }

@@ -18,12 +18,18 @@
     <string name="title_upcoming">Up Coming</string>
     <string name="title_favorite">Favorite Movies</string>
     <string name="loading">loading...</string>
-
-
     <string name="pengaturan">Setting</string>
     <string name="ganti_bahasa">Change Language...</string>
     <string name="searcht" formatted="false">Found %d result for \'%s\'</string>
     <string name="seaarchf" formatted="false">No result for \'%s\'</string>
     <string name="query_hint">Search...</string>
+    <string name="memuat">loading...</string>
+    <string name="pengaturan_notifikasi">Notification</string>
+    <string name="notifikasi_harian">Daily Notification</string>
+    <string name="notif_setiap_hari">Daily notif</string>
+    <string name="notifikasi_film_baru">New Released Movie Notification</string>
+    <string name="notif_film_baru_dirilis">Notification about newest released movie</string>
+    <string name="notif_harian">dailiy_notif</string>
+    <string name="notif_rilis">release_notif</string>
 
 </resources>

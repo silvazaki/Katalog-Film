@@ -17,11 +17,19 @@
     <string name="title_upcoming">Akan Datang</string>
     <string name="title_favorite">Film Favorit</string>
     <string name="loading">sedang memuat...</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="pengaturan">Pengaturan</string>
     <string name="ganti_bahasa">Ganti Bahasa...</string>
     <string name="searcht" formatted="false">Ditemukan %d hasil untuk \'%s\'</string>
     <string name="seaarchf" formatted="false">Tidak ditemukan hasil untuk \'%s\'</string>
     <string name="query_hint">Cari...</string>
+    <string name="memuat">sedang memuat..</string>
+    <string name="pengaturan_notifikasi">Notifikasi</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="notifikasi_harian">Notifikasi Harian</string>
+    <string name="notif_setiap_hari">Notifikasi setiap hari</string>
+    <string name="notifikasi_film_baru">Notifikasi Film Baru</string>
+    <string name="notif_film_baru_dirilis">Notifikasi saat film baru telah dirilis</string>
+    <string name="notif_harian">Notifikasi Harian</string>
+    <string name="notif_rilis">Notifikasi Rilis</string>
+
 </resources>

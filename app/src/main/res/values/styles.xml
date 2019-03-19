@@ -6,17 +6,13 @@
         <item name="android:windowBackground">@color/colorBG</item>
     </style>
 
-    <style name="MyMaterialTheme.Search" parent="MyMaterialTheme">
-        <item name="android:editTextColor">@color/colorWhite</item>
-        <item name="android:textColorHint">@color/colorWhite</item>
-    </style>
-
     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <!--custom component-->

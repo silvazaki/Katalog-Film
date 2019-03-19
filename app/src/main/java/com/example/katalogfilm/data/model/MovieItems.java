@@ -211,4 +211,9 @@ public class MovieItems implements Parcelable {
         dest.writeString(this.overview);
         dest.writeString(this.releaseDate);
     }
+
+    public interface MovieItemsCallback{
+        void onSucces(MovieItems movieItems);
+        void onFailure(String message);
+    }
 }

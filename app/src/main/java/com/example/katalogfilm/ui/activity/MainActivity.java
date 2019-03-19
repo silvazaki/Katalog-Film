@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -15,22 +16,27 @@ import com.example.katalogfilm.ui.fragment.NowPlayingFragment;
 import com.example.katalogfilm.ui.fragment.SettingFragment;
 import com.example.katalogfilm.ui.fragment.UpcomingFragment;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
 
+    @BindView(R.id.view_pager)
     ViewPager viewPager;
+    @BindView(R.id.tab_layout)
     TabLayout tabLayout;
+    @BindView(R.id.search_view)
     LinearLayout searchLayout;
+
+    public final static String KEY_DAILY = "DAILY";
+    public final static String KEY_RELEASE = "RELEASE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        viewPager = findViewById(R.id.view_pager);
-        tabLayout = findViewById(R.id.tab_layout);
-        searchLayout = findViewById(R.id.search_view);
-
+        ButterKnife.bind(this);
 
         tabLayout.setupWithViewPager(viewPager);
         initPager();
@@ -41,7 +47,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        viewPager.setCurrentItem(0, false);
+
+        if(TextUtils.equals(getIntent().getStringExtra(KEY_DAILY), KEY_RELEASE)){
+            viewPager.setCurrentItem(1, false);
+        }
 
     }
 
@@ -58,5 +67,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(3).setIcon(R.drawable.ic_settings);
         int limit = (pagerAdapter.getCount() > 1 ? pagerAdapter.getCount() - 1 : 1);
         viewPager.setOffscreenPageLimit(limit);
+        viewPager.setCurrentItem(0, false);
     }
+
 }

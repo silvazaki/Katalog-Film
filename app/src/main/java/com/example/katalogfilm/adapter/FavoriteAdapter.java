@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +14,9 @@ import com.example.katalogfilm.R;
 import com.example.katalogfilm.data.model.MovieItems;
 import com.example.katalogfilm.util.ViewOnItemClick;
 import com.squareup.picasso.Picasso;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewholder> {
@@ -54,7 +56,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     public void onBindViewHolder(FavoriteViewholder holder, int position) {
         final MovieItems items = getItem(position);
         holder.tvTitle.setText(items.getTitle());
-        holder.tvDescription.setText(items.getOverview());
+        holder.tvDesc.setText(items.getOverview());
         Picasso.with(context)
                 .load("https://image.tmdb.org/t/p/w185" + items.getPosterPath())
                 .into(holder.imgCover);
@@ -73,14 +75,16 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     }
 
     class FavoriteViewholder extends RecyclerView.ViewHolder {
-        TextView tvTitle, tvDescription;
+        @BindView(R.id.tv_item_name)
+        TextView tvTitle;
+        @BindView(R.id.tv_item_desc)
+        TextView tvDesc;
+        @BindView(R.id.img_item_photo)
         ImageView imgCover;
 
         FavoriteViewholder(View itemView) {
             super(itemView);
-            tvTitle = itemView.findViewById(R.id.tv_item_name);
-            tvDescription = itemView.findViewById(R.id.tv_item_desc);
-            imgCover = itemView.findViewById(R.id.img_item_photo);
+            ButterKnife.bind(this, itemView);
         }
     }
 }

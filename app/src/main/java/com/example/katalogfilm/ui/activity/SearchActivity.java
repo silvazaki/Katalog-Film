@@ -22,12 +22,20 @@ import com.example.katalogfilm.util.ViewOnItemClick;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<MovieItems>> {
-    static final String EXTRAS_FILM = "EXTRAS_FILM";
-    MovieAdapter adapter;
+
+    @BindView(R.id.listView)
     RecyclerView listMovie;
+    @BindView(R.id.search_view)
     SearchView searchView;
+    @BindView(R.id.tv_search_info)
     TextView searchInfo;
+
+    public static final String EXTRAS_FILM = "EXTRAS_FILM";
+    private MovieAdapter adapter;
     private String language;
     private String query;
 
@@ -35,17 +43,18 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-
-
-        listMovie = findViewById(R.id.listView);
-        searchView = findViewById(R.id.search_view);
-        searchInfo = findViewById(R.id.tv_search_info);
+        ButterKnife.bind(this);
 
         adapter = new MovieAdapter(this);
         listMovie.setLayoutManager(new LinearLayoutManager(this));
         listMovie.setAdapter(adapter);
         language = getResources().getString(R.string.bahasa);
         setOnClick();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     @NonNull
