@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#24c286</color>
+    <color name="colorPrimaryDark">#11998e</color>
+    <color name="colorAccent">#24c286</color>
+
+    <color name="colorTxt">#424242</color>
+
+    <color name="gradStart">#11998e</color>
+    <color name="gradEnd">#26c785</color>
+
+</resources>
